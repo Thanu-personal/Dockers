@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+    todo-app:
+        image: 'vijaynvb/todoapimysql:1.0'
+        restart: always
+        container_name: todo-app
+        ports:
+            - "8080:80"
+        environment:
+            - SPRING_DATASOURCE_USERNAME=root
+            - SPRING_DATASOURCE_PASSWORD=P@ssw0rd
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/tododb
+            - SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION=true
+        depends_on:
+            - mysqldb 
+             
+    mysqldb:
+        image: mysql:8
+        restart: always
+        container_name: mysqldb
+        environment:
+            - MYSQL_ROOT_PASSWORD=P@ssw0rd
+            - MYSQL_DATABASE=tododb
+        ports:
+            - "3307:3306"
